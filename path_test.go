@@ -4,7 +4,10 @@ package astar
 // implementation.  testPath is used to check the calculated path distance is
 // what we're expecting.
 
-import "testing"
+import (
+	"context"
+	"testing"
+)
 
 // testPath takes a string encoded world, decodes it, calculates a path and
 // checks the expected distance matches.  An expectedDist of -1 expects that no
@@ -12,7 +15,7 @@ import "testing"
 func testPath(worldInput string, t *testing.T, expectedDist float64) {
 	world := ParseWorld(worldInput)
 	t.Logf("Input world\n%s", world.RenderPath([]Pather{}))
-	p, dist, found := Path(world.From(), world.To())
+	p, dist, found := Path(context.TODO(), world.From(), world.To())
 	if !found {
 		t.Log("Could not find a path")
 	} else {
@@ -124,6 +127,6 @@ F............................~.................................................
 ...............................................X...~.......M.........X...X...XT
 `)
 	for i := 0; i < b.N; i++ {
-		Path(world.From(), world.To())
+		Path(context.TODO(), world.From(), world.To())
 	}
 }
